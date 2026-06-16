@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+northwind.db
+chroma_db/
+uploads/
+static/
+node_modules/
+dist/
+.DS_Store
+*.egg-info/
+.venv/
+venv/

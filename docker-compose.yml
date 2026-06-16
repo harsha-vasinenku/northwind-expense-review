@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data/northwind.db:/app/northwind.db
+      - ./data/chroma_db:/app/chroma_db
+      - ./data/uploads:/app/uploads
+    restart: unless-stopped

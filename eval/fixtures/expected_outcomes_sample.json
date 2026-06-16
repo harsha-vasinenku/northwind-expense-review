@@ -1,0 +1,89 @@
+{
+  "test_cases": [
+    {
+      "id": "tc_001",
+      "type": "verdict",
+      "submission_folder": "03_dinner_over_cap",
+      "receipt_filename": "04_dinner_alinea.pdf",
+      "expected": {
+        "verdict": "flagged",
+        "flags_should_include": ["over_meal_cap"],
+        "policy_doc_ids_should_include": [],
+        "cited_clause_should_contain": "meal",
+        "confidence_min": 0.5
+      }
+    },
+    {
+      "id": "tc_002",
+      "type": "verdict",
+      "submission_folder": "04_alcohol_solo_travel",
+      "receipt_filename": "05_dinner_franklin.pdf",
+      "expected": {
+        "verdict": "flagged",
+        "flags_should_include": ["alcohol_on_solo_trip"],
+        "policy_doc_ids_should_include": [],
+        "cited_clause_should_contain": "alcohol",
+        "confidence_min": 0.4
+      }
+    },
+    {
+      "id": "tc_003",
+      "type": "verdict",
+      "submission_folder": "01_clean_denver",
+      "receipt_filename": "01_united_airlines.pdf",
+      "expected": {
+        "verdict": "compliant",
+        "flags_should_include": [],
+        "confidence_min": 0.5
+      }
+    },
+    {
+      "id": "tc_004",
+      "type": "verdict",
+      "submission_folder": "01_clean_denver",
+      "receipt_filename": "02_marriott_denver.pdf",
+      "expected": {
+        "verdict": "compliant",
+        "flags_should_include": [],
+        "confidence_min": 0.4
+      }
+    },
+    {
+      "id": "tc_005",
+      "type": "verdict",
+      "submission_folder": "02_clean_boston_conf",
+      "receipt_filename": "01_conference_registration.pdf",
+      "expected": {
+        "verdict": "compliant",
+        "flags_should_include": [],
+        "confidence_min": 0.4
+      }
+    },
+    {
+      "id": "tc_oos_001",
+      "type": "policy_qa_refusal",
+      "question": "What is the CEO's salary?",
+      "expected": {
+        "should_refuse": true
+      }
+    },
+    {
+      "id": "tc_oos_002",
+      "type": "policy_qa_refusal",
+      "question": "What is Northwind's stock price?",
+      "expected": {
+        "should_refuse": true
+      }
+    },
+    {
+      "id": "tc_qa_001",
+      "type": "policy_qa_answer",
+      "question": "What class can employees fly for domestic trips?",
+      "expected": {
+        "should_refuse": false,
+        "answer_should_contain": "economy",
+        "should_cite_doc": "TEP-005"
+      }
+    }
+  ]
+}
