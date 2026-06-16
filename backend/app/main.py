@@ -98,7 +98,7 @@ def create_app() -> FastAPI:
             "version": VERSION,
         }
 
-    static_dir = Path(__file__).parent.parent.parent / "static"
+    static_dir = Path(__file__).parent.parent / "static"
     if static_dir.exists():
         app.mount("/", StaticFiles(directory=str(static_dir), html=True), name="static")
 
