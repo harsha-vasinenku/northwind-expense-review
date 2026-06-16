@@ -100,7 +100,14 @@ def create_app() -> FastAPI:
 
     static_dir = Path(__file__).parent.parent / "static"
     if static_dir.exists():
-        app.mount("/", StaticFiles(directory=str(static_dir), html=True), name="static")
+        from fastapi.responses import FileResponse
+
+        @app.get("/{full_path:path}", include_in_schema=False)
+        async def serve_spa(full_path: str) -> FileResponse:
+            file = static_dir / full_path
+            if file.exists() and file.is_file():
+                return FileResponse(str(file))
+            return FileResponse(str(static_dir / "index.html"))
 
     return app
 
