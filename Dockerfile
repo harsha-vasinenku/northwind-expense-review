@@ -12,6 +12,7 @@ WORKDIR /app
 COPY backend/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/ ./
+COPY data/ ./bundle/
 COPY --from=frontend-build /app/static ./static
 RUN python -c "from chromadb.utils.embedding_functions.onnx_mini_lm_l6_v2 import ONNXMiniLM_L6_V2; ONNXMiniLM_L6_V2()"
 EXPOSE 8000

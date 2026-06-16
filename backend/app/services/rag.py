@@ -16,7 +16,7 @@ from app.constants import NON_TE_POLICY_IDS
 
 logger = structlog.get_logger(__name__)
 
-POLICIES_DIR = Path(__file__).parent.parent.parent / "data" / "policies"
+POLICIES_DIR = Path(__file__).parent.parent.parent / "bundle" / "policies"
 COLLECTION_NAME = "northwind_policies"
 
 

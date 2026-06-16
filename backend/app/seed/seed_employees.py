@@ -11,7 +11,7 @@ from app.models.employee import Employee
 
 logger = structlog.get_logger(__name__)
 
-SUBMISSIONS_DIR = Path(__file__).parent.parent.parent / "data" / "submissions"
+SUBMISSIONS_DIR = Path(__file__).parent.parent.parent / "bundle" / "submissions"
 
 
 async def seed_employees(session: AsyncSession) -> None:
