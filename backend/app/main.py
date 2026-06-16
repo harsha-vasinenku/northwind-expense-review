@@ -1,5 +1,6 @@
 """FastAPI application factory with lifespan hooks."""
 
+import asyncio
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import AsyncGenerator
@@ -21,9 +22,21 @@ logger = structlog.get_logger(__name__)
 VERSION = "1.0.0"
 
 
+async def _background_seed() -> None:
+    """Run employee + policy seeding in the background after startup."""
+    try:
+        async with AsyncSessionLocal() as session:
+            await seed_employees(session)
+        rag = get_rag_service()
+        await seed_policies(rag)
+        logger.info("Background seeding complete", version=VERSION)
+    except Exception:
+        logger.exception("Background seeding failed")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
-    """Startup: create tables, seed employees, index policies."""
+    """Startup: create tables then seed in background so app starts fast."""
     settings = get_settings()
 
     Path(settings.upload_dir).mkdir(parents=True, exist_ok=True)
@@ -32,11 +45,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         await conn.run_sync(Base.metadata.create_all)
     logger.info("Database tables created")
 
-    async with AsyncSessionLocal() as session:
-        await seed_employees(session)
-
-    rag = get_rag_service()
-    await seed_policies(rag)
+    asyncio.create_task(_background_seed())
 
     logger.info("Application startup complete", version=VERSION)
     yield
